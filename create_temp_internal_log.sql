@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS temp_activity_log like activity_log;

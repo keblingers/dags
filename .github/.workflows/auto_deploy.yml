@@ -1,10 +1,8 @@
 name : deploy to kebsas airflow
-
 on :
   pull_request_review:
     types: 
       - submitted
-
 jobs:
   approved:
     if: github.event.review.state == 'approved'

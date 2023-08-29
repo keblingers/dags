@@ -1,26 +1,29 @@
 name : deploy to kebsas airflow
 
 on :
-  pull_request:
+  pull_request_review:
     types: 
-      - closed
+      - submitted
     branches:
       - master
 
 jobs:
   deploy: deploy prod
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-      - uses: actions/checkout@v2
+    approved:
+      if: github.event.review.state == 'approved'
+    deploy: deploy prod
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout
+        - uses: actions/checkout@v2
 
-      - name: start rsync
-      - uses: contention/rsync-deployments@v2.0.0
-        with:
-          USER: ${{ secret.SSH_USERNAME }}
-          HOST: ${{ secret.SSH_HOST }}
-          DEPLOY_KEY: ${{ secret.SSH_KEY }}
-          LOCALPATH: /dags/
-          REMOTEPATH: /airflow/dags
-          FLAGS: -avzr
-          command: chown airflow:airflow /airflow/dags/*
+        - name: start rsync
+        - uses: contention/rsync-deployments@v2.0.0
+          with:
+            USER: ${{ secret.SSH_USERNAME }}
+            HOST: ${{ secret.SSH_HOST }}
+            DEPLOY_KEY: ${{ secret.SSH_KEY }}
+            LOCALPATH: /dags/
+            REMOTEPATH: /airflow/dags
+            FLAGS: -avzr
+            command: chown airflow:airflow /airflow/dags/*

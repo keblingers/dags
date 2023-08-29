@@ -1,11 +1,11 @@
 name : deploy to kebsas airflow
 on :
-  pull_request_review:
-    types: 
-      - submitted
+  push:
+    branches: 
+      - master
 jobs:
-  approved:
-    if: github.event.review.state == 'approved'
+  build:
+    name: deploy
     runs-on: ubuntu-latest
     steps:
       - name: checkout

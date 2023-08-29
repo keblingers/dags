@@ -9,15 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-      - uses: actions/checkout@v2
-
-      - name: start rsync
-      - uses: contention/rsync-deployments@v2.0.0
+        uses: fifsky/ssh-action@master
         with:
-          USER: ${{ secret.SSH_USERNAME }}
-          HOST: ${{ secret.SSH_HOST }}
-          DEPLOY_KEY: ${{ secret.SSH_KEY }}
-          LOCALPATH: /dags/
-          REMOTEPATH: /airflow/dags
-          FLAGS: -avzr
-          command: chown airflow:airflow /airflow/dags/*
+          host: ${{ secret.SSH_HOST }}
+          user: ${{ secret.SSH_USERNAME }}
+          key: ${{ secret.SSH_KEY }}
+          command: cd /airflow/dags/ && git pull origin master && chown airflow:airflow /airflow/dags/

@@ -32,7 +32,7 @@ def failed_tasks():
 
 default_args = {
     'owner' : 'airflow',
-    'email' : ['fatah@sahabatbisnis.co.id'],
+    'email' : ['bsotoayam@gmail.com'],
     'email_on_failure' : True
 }
 
@@ -55,7 +55,7 @@ with DAG('send_email',
 
     send_email = EmailOperator(
         task_id = 'send_email',
-        to = 'fatah@sahabatbisnis.co.id',
+        to = 'bsotoayam@gmail.com',
         subject = 'test send email airflow',
         html_content="date : {{ ds }}"
     )

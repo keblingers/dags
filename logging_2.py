@@ -52,7 +52,7 @@ def temp_activity_log():
 
         connection = BaseHook.get_connection('mysql_rog')
         engine = create_engine(f'mysql://{connection.login}:{connection.password}@{connection.host}/{connection.schema}')
-        data.to_sql(f'{table}', con=engine, if_exists='append', index=False)
+        temp_data.to_sql(f'{table}', con=engine, if_exists='append', index=False)
     else:
         print('no dataaa')
 

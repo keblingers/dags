@@ -1,0 +1,17 @@
+name : deploy to kebsas airflow
+on :
+  push:
+    branches: 
+      - kebsas01
+jobs:
+  build:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: fifsky/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          command: cd /airflow/dags/ && git pull origin master && chown airflow:airflow /airflow/dags/

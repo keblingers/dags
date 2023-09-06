@@ -16,7 +16,8 @@ import pytz
 now = datetime.today().astimezone(pytz.UTC)
 
 def get_sync_time(table_name):
-    conn = create_engine('mysql://root:Qwerty#123@8.215.36.249/ihsg')
+    conn_hook = BaseHook.get_connection('mysql_ihsg')
+    conn = create_engine('mysql://{conn_hook.login}:{conn_hook.password}@{conn_hook.host}/{conn_hook.schema}')
     data = pd.read_sql(f"select sync_status_time from sync_status where sync_status_table = '{table_name}'",con=conn)
     sync_time = data['sync_status_time'].iloc[0]
     a = sync_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -55,7 +56,7 @@ def temp_mongo_data():
 
         connection = BaseHook.get_connection('mysql_ihsg')
         engine = create_engine(f'mysql://{connection.login}:{connection.password}@{connection.host}/{connection.schema}')
-        data.to_sql(f'{table}', con=engine, if_exists='append', index=False)
+        temp_data.to_sql(f'{table}', con=engine, if_exists='append', index=False)
     else:
         print('no dataaa')
 

@@ -17,7 +17,6 @@ from bson import ObjectId
 def load_mongo_data():
     # try:
     mongo_hook = MongoHook(mongo_conn_id = 'mongo_kebsas02')
-    #mongo_engine = create_engine("mongodb://Server=kebsas02&Port=27017&Database=keblingers&User=root&Password=Qwerty123")
     mongo_conn = mongo_hook.get_conn()
     mongo_db = mongo_conn.keblingers
     mongo_collection = mongo_db.stock_ticker

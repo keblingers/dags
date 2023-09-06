@@ -14,4 +14,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           user: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          command: cd /airflow/dags/ && git pull origin master && chown airflow:airflow /airflow/dags/
+          command: cd /airflow/dags/ && git pull origin master && chown airflow:airflow /airflow/dags/*
